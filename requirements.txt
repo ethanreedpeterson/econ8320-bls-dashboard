@@ -2,3 +2,6 @@ streamlit
 pandas
 python-dotenv
 requests
+matplotlib
+seaborn
+numpy
