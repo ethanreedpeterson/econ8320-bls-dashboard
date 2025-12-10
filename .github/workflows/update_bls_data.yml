@@ -1,0 +1,39 @@
+name: Update BLS Data Monthly
+
+on:
+  schedule:
+    - cron: "0 14 1 * *"   # Runs at 8:00 AM CST on the 1st of every month
+  workflow_dispatch:        # Allows manual triggering
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create .env file with BLS API key
+        run: |
+          echo "BLS_API_KEY=${{ secrets.BLS_API_KEY }}" > .env
+
+      - name: Run BLS data collection script
+        run: python scripts/collect_bls_data.py
+
+      - name: Commit and push updated dataset
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/bls_data.csv
+          git commit -m "Monthly update: refreshed BLS dataset" || echo "No changes to commit"
+          git push
