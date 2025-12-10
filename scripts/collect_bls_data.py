@@ -78,13 +78,10 @@ def load_existing():
 def update_dataset():
     existing = load_existing()
 
-    # Determining start year, fetches only new row if dataset exists
-    if existing.empty:
-        start_year = datetime.now().year - 2
-    else:
-        last_date = existing["date"].max()
-        start_year = last_date.year
-    
+    # Determine date range to fetch every time: always last 24 months
+    today = datetime.now()
+    start_year = today.year - 2
+    end_year = today.year
     end_year = datetime.now().year
 
     # Pulling the new data
