@@ -3,8 +3,6 @@ import pandas as pd
 from pathlib import Path
 import seaborn as sns
 import matplotlib.pyplot as plt
-from math import pi
-import numpy as np
 
 DATA_PATH = Path("data/bls_data.csv")
 
@@ -55,7 +53,7 @@ col2.markdown(
         <strong>{nfp_yoy:+.1f}% YoY</strong>
     </div>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html = True
 )
 # Hourly Earnings
 ahe = latest["avg_hourly_earnings"]
@@ -72,7 +70,7 @@ col3.markdown(
         <strong>{ahe_yoy:+.1f}% YoY</strong>
     </div>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html = True
 )
 # Table Summary of Latest Data
 clean_df = df.copy()
@@ -143,7 +141,7 @@ for pos in year_split_positions:
 plt.title("")
 plt.xlabel("")
 plt.ylabel("")
-plt.xticks(rotation=45, ha="right")
+plt.xticks(rotation = 45, ha = "right")
 plt.tight_layout()
 
 st.pyplot(fig)
